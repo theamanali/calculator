@@ -1,6 +1,40 @@
-* {
-  box-sizing: border-box;
-  padding: 0;
+html, body {
+  height: 100%;
   margin: 0;
+  padding: 0;
   border: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.calculator{
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  border: 2px solid black;
+  max-width: 800px;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+button {
+  flex: 1 1 100px;
+  min-height: 100px;
+}
+
+.display {
+  margin: 0;
+  height: 100px;
+}
+
+.backspace {
+  flex: 2 1 200px;
+}
+
+.equals {
+  flex: 2 1 200px;
 }
