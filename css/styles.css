@@ -89,3 +89,9 @@ button {
   background-color: #FF9500;
 }
 
+.operator,
+.negative,
+.equals {
+  font-size: 48px
+}
+
