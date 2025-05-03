@@ -10,26 +10,24 @@ html, body {
   flex-direction: column;
   font-family: Inter, sans-serif;
   box-sizing: border-box;
+  background-color: #505050;
 }
 
 .calculator{
   display: flex;
   flex-direction: column;
+  flex: 0;
   margin: auto;
-  min-width: 460px;
-  background-color: black;
-  gap: 24px;
-  border: 24px solid black;
-  border-radius: 10px;
+  background-color: #1C1C1C;
+  border-radius: 48px;
 }
 
 .buttons {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  background-color: white;
-  gap: 12px;
-  padding: 12px;
+  gap: 8px;
+  padding: 24px;
 
 }
 
@@ -37,22 +35,31 @@ button {
   box-sizing: border-box;
   flex: 0 0 100px;
   height: 100px;
-  font-size: 32px;
+  font-size: 36px;
   border-radius: 100px;
   padding: 0;
+  border: none;
+  background-color: #2a2a2c;
+  color: white;
 }
 
 .display-container {
   display: flex;
-  align-items: center;
-  height: 100px;
-  background-color: white;
+  flex-direction: column;
+  color: white;
+  padding: 48px 24px 24px 24px;
+  gap: 24px;
 }
 
-.display {
-  padding: 12px;
-  margin: 0;
-  font-size: 100px;
+.solution-display {
+  font-size: 72px;
+  margin: 0 0 0 auto;
+}
+
+.equation {
+  font-size: 36px;
+  color: #505050;
+  margin: 0 0 0 auto;
 }
 
 .row1Container,
@@ -62,27 +69,23 @@ button {
 .row5Container{
   display: flex;
   justify-content: space-between;
-  gap: 12px;
+  gap: 8px;
 }
 
-.backspace,
 .equals{
   flex-grow: 2;
 }
 
-.equals {
-  background-color: #808080;
-}
-
-.backspace,
-.clear {
-  background-color: #FFB6C1;
+.modulo,
+.clear,
+.negative {
+  background-color: #505050;
 }
 
 
 
 .operator,
-.decimal {
-  background-color: #A9A9A9;
+.equals {
+  background-color: #FF9500;
 }
 
