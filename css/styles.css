@@ -41,6 +41,12 @@ button {
   border: none;
   background-color: #2a2a2c;
   color: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:active {
+  background-color: #a3a3a3;
 }
 
 .display-container {
@@ -54,12 +60,14 @@ button {
 .solution-display {
   font-size: 72px;
   margin: 0 0 0 auto;
+  min-height: 87px;
 }
 
 .equation {
   font-size: 36px;
   color: #505050;
   margin: 0 0 0 auto;
+  min-height: 44px;
 }
 
 .row1Container,
@@ -95,3 +103,6 @@ button {
   font-size: 48px
 }
 
+p {
+  margin: 0;
+}

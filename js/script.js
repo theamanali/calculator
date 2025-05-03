@@ -3,6 +3,9 @@ let num2;
 let operator;
 
 
+
+let displayContent
+
 function add(num1, num2) {
     return num1 + num2;
 }
