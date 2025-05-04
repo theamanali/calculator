@@ -112,7 +112,12 @@ button:active {
 .operator,
 .negative,
 .equals {
-  font-size: 48px
+  font-size: 56px
+}
+
+.modulo,
+.clear {
+  font-weight: bolder;
 }
 
 .author {
