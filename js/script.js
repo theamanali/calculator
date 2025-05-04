@@ -17,12 +17,20 @@ const buttons = document.querySelector('.buttons');
 
 solutionDisplayContent.textContent = "";
 let hasOperatorSelected = false;
+let equation = {
+    num1: 0, 
+    num2: 0,
+    operator: "",
+}
 
 buttons.addEventListener('click', (e) => {
     const button = e.target;
     const label  = button.textContent;
     
-    if (label === OPERATORS.CLEAR) {
+    if (button.classList.contains('selected')) {
+        resetSelectedOperator();
+    }
+    else if (label === OPERATORS.CLEAR) {
         handleClear();
     } 
     else if (label === OPERATORS.MODULO) {
@@ -32,7 +40,7 @@ buttons.addEventListener('click', (e) => {
         handleUnary(negate);
     }
     else if (button.className === "operator") {
-        handleOperatorInput(label);
+        handleOperatorInput(label, button);
     }
     else if (button.className === "equals") {
         handleEquals();
@@ -44,82 +52,78 @@ buttons.addEventListener('click', (e) => {
     }
 })
 
-/**
- * Parse the current display into its parts.
- */
-function getExpressionParts() {
-    const text = solutionDisplayContent.textContent;
-    const operatorIndex = text.search(/[÷×−+]/);
-    const operator = text[operatorIndex];
-    const firstNum = Number(text.slice(0, operatorIndex));
-    const secondNum = Number(text.slice(operatorIndex + 1));
-    return { text, operatorIndex, operator, firstNum, secondNum };
-}
-
 function handleClear() {
-    clear();
+    resetEquation();
+    clearSolutionDisplay();
+    clearPreviousEquation();
+    resetSelectedOperator();
 }
 
 function handleUnary(fn) {
-    // e.g. fn = percentage or negate; appendSymbol is "%" or "+/−"
-    const { text, operatorIndex } = getExpressionParts();
-
-    if (hasOperatorSelected) {
-        // only act if there's actually a second operand
-        if (operatorIndex + 1 !== text.length) {
-            const secondNum = Number(text.slice(operatorIndex + 1));
-            const resultText = text.slice(0, operatorIndex + 1)
-                + fn(secondNum);
-            displaySolution(resultText);
-        }
-    } else {
-        // show the symbol briefly, then compute full result
-        solutionDisplayContent.textContent = text;
+        // replace solution display with full result
+        const text = solutionDisplayContent.textContent;
         const result = fn(Number(text));
         displaySolution(result);
+}
+
+function handleOperatorInput(label, button) {
+    // if no operator has been selected before current one, clear and allow
+    // user to enter second operand. changes color of selected operator
+    if (!hasOperatorSelected) {
+        button.classList.add('selected');
+        
+        // store operator and num1 for use later
+        equation.operator = label;
+        equation.num1 = Number(solutionDisplayContent.textContent);
+        
+        // clear display and set status
+        displaySolution("");
+        hasOperatorSelected = true;
+    }
+    else {
+        // if this is second operator, compute solution and deselect prior
+        // operator
+        equation.num2 = Number(solutionDisplayContent.textContent);
+        const solution = operate(equation.num1, equation.num2, equation.operator);
+
+        displaySolution(solution);
+        displayPreviousEquation(equation.num1, equation.num2, equation.operator);
+        resetSelectedOperator();
+        resetEquation(solution);
     }
 }
 
-function handleOperatorInput(newOp) {
-    const { text, operatorIndex, firstNum, secondNum, operator } = getExpressionParts();
+function resetEquation(solutionOfPrevious = 0) {
+    equation.operator = "";
+    hasOperatorSelected = false;
+    equation.num1 = solutionOfPrevious;
+    equation.num2 = 0
+}
 
-    if (hasOperatorSelected) {
-        if (operatorIndex + 1 !== text.length) {
-            // compute existing then start new operator
-            const solution = operate(firstNum, secondNum, operator);
-            displaySolution(solution);
-            displayChar(newOp);
-            displayPreviousEquation(`${firstNum}${operator}${secondNum}`);
-        } 
-        else {
-            // user changed their mind about operator
-            displaySolution(text.slice(0, operatorIndex));
-            displayChar(newOp);
-        }
-    } 
-    else {
-        hasOperatorSelected = true;
-        displayChar(newOp);
-    }
+function resetSelectedOperator() {
+    const selectedButton = buttons.querySelector('.selected');
+    selectedButton.classList.remove('selected');
+    hasOperatorSelected = false;
+}
+
+function clearSolutionDisplay() {
+    solutionDisplayContent.textContent = '';
+}
+
+function clearPreviousEquation() {
+    equationDisplayContent.textContent = '';
 }
 
 
 function handleEquals() {
-    const { text, operatorIndex, firstNum, secondNum, operator } = getExpressionParts();
-
     if (!hasOperatorSelected) return;
+    
+    equation.num2 = Number(solutionDisplayContent.textContent);
+    let solution = operate(equation.num1, equation.num2, equation.operator);
 
-    if (operatorIndex + 1 !== text.length) {
-        const solution = operate(firstNum, secondNum, operator);
-        displaySolution(solution);
-        displayPreviousEquation(`${firstNum}${operator}${secondNum}`);
-    } 
-    else {
-        // trailing operator—just roll back to firstNum
-        displaySolution(text.slice(0, operatorIndex));
-    }
-
-    hasOperatorSelected = false;
+    displaySolution(solution);
+    displayPreviousEquation(equation.num1, equation.num2, equation.operator);
+    resetSelectedOperator();
 }
 
 function handleDigitInput(char) {
@@ -127,8 +131,6 @@ function handleDigitInput(char) {
         displayChar(char);
     }
 }
-
-
 
 function displayChar(char) {
     solutionDisplayContent.textContent += char;
@@ -138,16 +140,9 @@ function displaySolution(solutionText) {
     solutionDisplayContent.textContent = solutionText;
 }
 
-function displayPreviousEquation(equationText) {
-    equationDisplayContent.textContent = equationText;
+function displayPreviousEquation(num1, num2, operator) {
+    equationDisplayContent.textContent = `${num1}${operator}${num2}`;
 }
-
-function clear() {
-    solutionDisplayContent.textContent = '';
-    equationDisplayContent.textContent = '';
-    hasOperatorSelected = false;
-}
-
 
 function add(num1, num2) {
     return num1 + num2;
