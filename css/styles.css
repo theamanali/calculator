@@ -30,6 +30,7 @@ p {
   display: flex;
   flex-direction: column;
   background-color: #1C1C1C;
+  min-width: 472px;
   max-width: 472px;
   border-radius: 48px;
   box-shadow: 24px 24px 24px 24px rgba(0, 0, 0, 0.2);
