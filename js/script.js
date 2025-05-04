@@ -80,6 +80,26 @@ buttons.addEventListener('click', (e) => {
             displayChar(operator); 
         }
     }
+    else if (button.className === "equals") {
+        if (hasOperatorSelected) {
+            let operatorIndex = currentText.search(/[÷×−+]/);
+            if (operatorIndex + 1 !== currentText.length) {
+                let firstNum = Number(currentText.slice(0, operatorIndex));
+                let secondNum = Number(currentText.slice(operatorIndex + 1));
+                let operator = currentText.slice(operatorIndex, operatorIndex + 1);
+                let solution = operate(firstNum, secondNum, operator);
+
+                displaySolution(solution)
+                displayPreviousEquation(firstNum + operator + secondNum);
+                hasOperatorSelected = false;
+            }
+            else {
+                displaySolution(currentText.slice(0, operatorIndex));
+                hasOperatorSelected = false;
+            }
+        }
+    }
+    
     else if (currentTextLength < MAX_SOLUTION_LENGTH) {
         let character = button.textContent;
         displayChar(character);
