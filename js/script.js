@@ -121,6 +121,7 @@ function handleOperatorInput(label, button) {
             // store operator and num1 for use later
             equation.operator = label;
             equation.num1 = Number(solutionDisplayContent.textContent);
+            displayPreviousEquation(equation.num1, "", label);
 
             // clear display and set status
             displaySolution("");
