@@ -115,15 +115,17 @@ function handleOperatorInput(label, button) {
     // if no operator has been selected before current one, clear and allow
     // user to enter second operand. changes color of selected operator
     if (!hasOperatorSelected) {
-        button.classList.add('selected');
-        
-        // store operator and num1 for use later
-        equation.operator = label;
-        equation.num1 = Number(solutionDisplayContent.textContent);
-        
-        // clear display and set status
-        displaySolution("");
-        hasOperatorSelected = true;
+        if (solutionDisplayContent.textContent.length > 0) {
+            button.classList.add('selected');
+
+            // store operator and num1 for use later
+            equation.operator = label;
+            equation.num1 = Number(solutionDisplayContent.textContent);
+
+            // clear display and set status
+            displaySolution("");
+            hasOperatorSelected = true;
+        }
     }
     else {
         // if this is second operator and display is empty, user probably
