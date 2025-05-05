@@ -102,7 +102,7 @@ function handleClear() {
     clearSolutionDisplay();
     clearPreviousEquation();
     resetSelectedOperator();
-    hasDecimalSelected = false;
+    resetDecimalSelected();
 }
 
 function handleUnary(fn) {
