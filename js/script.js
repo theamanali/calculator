@@ -18,20 +18,19 @@ const operations = {
     [OPERATORS.MODULO]:   x       => x / 100,
     [OPERATORS.NEGATE]:   x       => -x,
 };
-
-
-let solutionDisplayContent = document.querySelector('.solution-display');
-const equationDisplayContent = document.querySelector('.equation');
-const buttons = document.querySelector('.buttons');
-
-solutionDisplayContent.textContent = "";
-let hasOperatorSelected = false;
-let hasDecimalSelected = false;
 let equation = {
-    num1: 0, 
+    num1: 0,
     num2: 0,
     operator: "",
 }
+
+let solutionDisplayContent = document.querySelector('.solution-display');
+let hasOperatorSelected = false;
+let hasDecimalSelected = false;
+
+const equationDisplayContent = document.querySelector('.equation');
+const buttons = document.querySelector('.buttons');
+solutionDisplayContent.textContent = "";
 
 buttons.addEventListener("click", onButtonClick);
 
@@ -43,9 +42,10 @@ function onButtonClick(e) {
     // If an operator is already selected, clear it
     if (button.classList.contains('selected')) {
         resetSelectedOperator();
+        displayPreviousEquation(equation.num1, "", "")
         return;
     }
-
+    
     // Clear button
     if (label === OPERATORS.CLEAR) {
         handleClear();
@@ -58,12 +58,8 @@ function onButtonClick(e) {
     }
 
     // Unary operations
-    if (label === OPERATORS.MODULO) {
-        handleUnary(percentage);
-        return;
-    }
-    if (label === OPERATORS.NEGATE) {
-        handleUnary(negate);
+    if (label === OPERATORS.MODULO || label === OPERATORS.NEGATE) {
+        handleUnary(label);
         return;
     }
 
@@ -105,10 +101,10 @@ function handleClear() {
     resetDecimalSelected();
 }
 
-function handleUnary(fn) {
+function handleUnary(label) {
         // replace solution display with full result
-        const text = solutionDisplayContent.textContent;
-        const result = fn(Number(text));
+        let num = solutionDisplayContent.textContent;
+        const result = operate(label, num);
         displaySolution(result);
 }
 
@@ -272,9 +268,6 @@ function operate(operator, ...nums) {
     return rounded;
 }
 
-function divide(num1, num2) {
-    return num1 / num2;
-}
 
 function percentage(num) {
     return num / 100;

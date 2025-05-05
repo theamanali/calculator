@@ -21,7 +21,6 @@ A browser-based calculator built with HTML, CSS, and JavaScript as part of The O
 
 #### To fix:
 - Previous equation display will overflow given large equation.
-- Modulo operator spam will overflow display
 
 ## 🛠️ Installation
 
