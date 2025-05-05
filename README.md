@@ -21,10 +21,10 @@ A browser-based calculator built with HTML, CSS, and JavaScript as part of The O
 
 ## 🛠️ Installation
 
-To run locally:
+To run locally (using SSH):
 
 ```bash
-git clone https://github.com/your-username/calculator.git
+git clone git@github.com:theamanali/calculator.git
 cd calculator
 open index.html
 ```
