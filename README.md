@@ -14,10 +14,14 @@ A browser-based calculator built with HTML, CSS, and JavaScript as part of The O
 - Single‑pair evaluation with auto‑chaining (e.g., entering “12 + 7 −” yields 19, then uses 19 as the next operand)
 - Rounds long decimal results to fit the display
 
-### Coming soon: 
+#### Coming soon: 
 - Backspace button to undo the last entry
 - Keyboard support for digits, operators, Enter (=), Backspace, and Escape (clear)
 - Error message on division by zero
+
+#### To fix:
+- Digit button only allows for one digit for all operations until page is 
+  refreshed
 
 ## 🛠️ Installation
 
