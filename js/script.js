@@ -159,7 +159,11 @@ function resetEquation(solutionOfPrevious = 0) {
 
 function resetSelectedOperator() {
     const selectedButton = buttons.querySelector('.selected');
-    selectedButton.classList.remove('selected');
+    
+    // check if no selected button to prevent errors
+    if (selectedButton) {
+        selectedButton.classList.remove('selected');
+    }
     hasOperatorSelected = false;
 }
 
