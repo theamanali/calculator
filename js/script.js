@@ -145,17 +145,25 @@ function handleOperatorInput(label, button) {
             hasOperatorSelected = true;
         }
         else {
-            // otherwise compute solution and deselect prior operator
+            // otherwise compute solution and select next operator
             equation.num2 = Number(currentSolutionText);
             const solution = operate(equation.operator, equation.num1, equation.num2);
 
             if (!checkDecimal(solution)) {
                 resetDecimalSelected()
             }
-            displaySolution(solution);
-            displayPreviousEquation(equation.num1, equation.num2, equation.operator);
             resetSelectedOperator();
             resetEquation(solution);
+            clearSolutionDisplay();
+            
+            // now update vars to allow for operation chaining
+            hasOperatorSelected = true;
+            button.classList.add('selected');
+            equation.operator = label;
+            equation.num1 = solution;
+            displayPreviousEquation(equation.num1, "", equation.operator);
+            hasOperatorSelected = true;
+            
         }
         
         

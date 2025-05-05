@@ -22,8 +22,6 @@ A browser-based calculator built with HTML, CSS, and JavaScript as part of The O
 #### To fix:
 - Previous equation display will overflow given large equation.
 - Modulo operator spam will overflow display
-- Allow chaining operators by calculating equation then moving the answer 
-  and new operator to upper display.
 
 ## 🛠️ Installation
 
