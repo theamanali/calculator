@@ -75,6 +75,7 @@ function onButtonClick(e) {
 
     // Decimal
     if (label === OPERATORS.DECIMAL) {
+        console.log(hasDecimalSelected);
         if (hasDecimalSelected) {
             return;
         }
@@ -125,6 +126,7 @@ function handleOperatorInput(label, button) {
 
             // clear display and set status
             displaySolution("");
+            resetDecimalSelected();
             hasOperatorSelected = true;
         }
     }
@@ -147,6 +149,9 @@ function handleOperatorInput(label, button) {
             equation.num2 = Number(currentSolutionText);
             const solution = operate(equation.operator, equation.num1, equation.num2);
 
+            if (!checkDecimal(solution)) {
+                resetDecimalSelected()
+            }
             displaySolution(solution);
             displayPreviousEquation(equation.num1, equation.num2, equation.operator);
             resetSelectedOperator();
@@ -157,11 +162,19 @@ function handleOperatorInput(label, button) {
     }
 }
 
+function checkDecimal(numString) {
+    return !!numString.includes(".");
+}
+
 function resetEquation(solutionOfPrevious = 0) {
     equation.operator = "";
     hasOperatorSelected = false;
     equation.num1 = solutionOfPrevious;
     equation.num2 = 0
+}
+
+function resetDecimalSelected() {
+    hasDecimalSelected = false;
 }
 
 function resetSelectedOperator() {
@@ -189,9 +202,13 @@ function handleEquals() {
     equation.num2 = Number(solutionDisplayContent.textContent);
     let solution = operate(equation.operator, equation.num1, equation.num2);
 
+    if (!checkDecimal(solution)) {
+        resetDecimalSelected()
+    }
     displaySolution(solution);
     displayPreviousEquation(equation.num1, equation.num2, equation.operator);
     resetSelectedOperator();
+    resetEquation(solution);
 }
 
 function handleDigitInput(char) {
