@@ -23,7 +23,6 @@ A browser-based calculator built with HTML, CSS, and JavaScript as part of The O
 - Digit button only allows for one digit for all operations until page is 
   refreshed
 - Previous equation display will overflow given large equation.
-- Previous equation should change operator when operator changes
 
 ## 🛠️ Installation
 
