@@ -2,9 +2,7 @@
 
 A browser-based calculator built with HTML, CSS, and JavaScript as part of The Odin Project Foundations course. Implements custom functions for add, subtract, multiply, divide, and expression evaluation.
 
-## 🚀 Try it out
-
-[Try it here](https://theamanali.github.io/calculator/)
+## 🚀 [Try it out](https://theamanali.github.io/calculator/)
 ![Calculator screenshot](./img/calculator-screenshot.png)
 
 ## ✨ Features
