@@ -22,6 +22,7 @@ A browser-based calculator built with HTML, CSS, and JavaScript as part of The O
 #### To fix:
 - Digit button only allows for one digit for all operations until page is 
   refreshed
+- Operator buttons can be used before any numbers are in the display
 
 ## 🛠️ Installation
 
