@@ -136,6 +136,10 @@ function handleOperatorInput(label, button) {
             resetSelectedOperator();
             button.classList.add('selected');
             equation.operator = label;
+
+            // store operator for use later
+            equation.operator = label;
+            displayPreviousEquation(equation.num1, "", label);
             hasOperatorSelected = true;
         }
         else {
