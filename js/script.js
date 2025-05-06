@@ -130,6 +130,7 @@ function onEvent(event) {
         if (hasSolutionDisplayed) {
             clearSolutionDisplay();
             hasSolutionDisplayed = false;
+            resetDecimalSelected();
         }
         handleDigitInput(currentButtonLabel);
     }
