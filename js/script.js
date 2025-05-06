@@ -310,6 +310,10 @@ function displayPreviousEquation(num1, num2, operator) {
 }
 
 function operate(operator, ...nums) {
+    if (nums[1] === 0 && operator === OPERATORS.DIVIDE) {
+        return "";
+    }
+    
     const operationFunction = operations[operator];
     let solution = operationFunction ? operationFunction(...nums) : undefined;
     
