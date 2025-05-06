@@ -53,8 +53,11 @@ document.addEventListener("keydown", (e) => {
         ".": ".",
         "Enter": "=",
         "=": "=",
-        "Backspace": "AC"
+        "Clear": "AC",
+        "Escape": "AC"
     };
+
+    console.log(e.key);
 
     if (keyMap[e.key]) {
         // Find button matching the key
