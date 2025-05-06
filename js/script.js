@@ -134,7 +134,7 @@ function onEvent(event) {
         handleDigitInput(currentButtonLabel);
     }
     
-    if (solutionDisplayContent.textContent.length > 0) {
+    if (solutionDisplayContent.textContent.length > 0 && !(hasSolutionDisplayed)) {
         clearAndBackspaceButton.textContent = OPERATORS.BACKSPACE;
     }
     else {
