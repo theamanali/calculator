@@ -153,6 +153,11 @@ function handleClear() {
 
 function handleBackspace() {
     let currentText = solutionDisplayContent.textContent;
+    let removeText = currentText.slice(-1);
+    if (removeText === OPERATORS.DECIMAL) {
+        resetDecimalSelected();
+    }
+    
     solutionDisplayContent.textContent = currentText.substring(0, currentText.length - 1);
 }
 
