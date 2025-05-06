@@ -35,61 +35,54 @@ solutionDisplayContent.textContent = "";
 buttons.addEventListener("click", onButtonClick);
 
 function onButtonClick(e) {
-    const button = e.target;
-    const label  = button.textContent;
-    const text   = solutionDisplayContent.textContent;
+    const currentButton = e.target;
+    const currentButtonLabel  = currentButton.textContent;
+    const currentSolutionDisplayText   = solutionDisplayContent.textContent;
 
     // If an operator is already selected, clear it
-    if (button.classList.contains('selected')) {
+    if (currentButton.classList.contains('selected')) {
         resetSelectedOperator();
         displayPreviousEquation(equation.num1, "", "")
         return;
     }
     
-    // Clear button
-    if (label === OPERATORS.CLEAR) {
+    // Clear currentButton
+    if (currentButtonLabel === OPERATORS.CLEAR) {
         handleClear();
         return;
     }
 
     // For modulo, negate or equals, do nothing if display is empty
-    if ([OPERATORS.MODULO, OPERATORS.NEGATE, OPERATORS.EQUALS].includes(label) && !text) {
+    if ([OPERATORS.MODULO, OPERATORS.NEGATE, OPERATORS.EQUALS].includes(currentButtonLabel) && !currentSolutionDisplayText) {
         return;
     }
 
     // Unary operations
-    if (label === OPERATORS.MODULO || label === OPERATORS.NEGATE) {
-        handleUnary(label);
+    if (currentButtonLabel === OPERATORS.MODULO || currentButtonLabel === OPERATORS.NEGATE) {
+        handleUnary(currentButtonLabel);
         return;
     }
 
     // Equals
-    if (label === OPERATORS.EQUALS) {
+    if (currentButtonLabel === OPERATORS.EQUALS) {
         handleEquals();
         return;
     }
 
     // Decimal
-    if (label === OPERATORS.DECIMAL) {
-        console.log(hasDecimalSelected);
-        if (hasDecimalSelected) {
-            return;
-        }
-        else {
-            hasDecimalSelected = true;
-            handleDigitInput(label); 
-        }
+    if (currentButtonLabel === OPERATORS.DECIMAL) {
+        handleDecimal(currentButtonLabel);
     }
 
     // Binary operators (+, −, ×, ÷)
-    if (button.classList.contains('operator')) {
-        handleOperatorInput(label, button);
+    if (currentButton.classList.contains('operator')) {
+        handleOperatorInput(currentButtonLabel, currentButton);
         return;
     }
 
     // Digits
-    if (button.classList.contains('number')) {
-        handleDigitInput(label);
+    if (currentButton.classList.contains('number')) {
+        handleDigitInput(currentButtonLabel);
     }
 }
 
@@ -108,43 +101,72 @@ function handleUnary(label) {
         displaySolution(result);
 }
 
+function handleEquals() {
+    // do nothing if no operator yet
+    if (!hasOperatorSelected) return;
+    
+    // compute solution
+    equation.num2 = Number(solutionDisplayContent.textContent);
+    let solution = operate(equation.operator, equation.num1, equation.num2);
+
+    // Set displays and reset for next equation
+    displaySolution(solution);
+    displayPreviousEquation(equation.num1, equation.num2, equation.operator);
+    resetSelectedOperator();
+    resetEquation(solution);
+    if (!checkDecimal(solution)) {
+        resetDecimalSelected()
+    }
+}
+
+function handleDecimal() {
+    if (!hasDecimalSelected) {
+        hasDecimalSelected = true;
+        handleDigitInput(OPERATORS.DECIMAL);
+    }
+}
+
 function handleOperatorInput(label, button) {
+    const currentSolutionText = solutionDisplayContent.textContent;
     // if no operator has been selected before current one, clear and allow
     // user to enter second operand. changes color of selected operator
     if (!hasOperatorSelected) {
         if (solutionDisplayContent.textContent.length > 0) {
+            // highlight selected operator
             button.classList.add('selected');
-
-            // store operator and num1 for use later
-            equation.operator = label;
-            equation.num1 = Number(solutionDisplayContent.textContent);
-            displayPreviousEquation(equation.num1, "", label);
-
-            // clear display and set status
-            displaySolution("");
-            resetDecimalSelected();
             hasOperatorSelected = true;
+            
+            // assigns equation vars
+            equation.operator = label;
+            equation.num1 = Number(currentSolutionText);
+            
+            // clear solution display and move to previous equation display
+            clearSolutionDisplay();
+            resetDecimalSelected();
+            displayPreviousEquation(equation.num1, "", label);
         }
     }
     else {
         // if this is second operator and display is empty, user probably
         // wants to change the operator
-        const currentSolutionText = solutionDisplayContent.textContent;
         if (currentSolutionText.length === 0) {
+            // deselect prior operator
             resetSelectedOperator();
+            
+            // select current operator
             button.classList.add('selected');
             equation.operator = label;
-
-            // store operator for use later
-            equation.operator = label;
-            displayPreviousEquation(equation.num1, "", label);
             hasOperatorSelected = true;
+
+            // update operator on previous equation display
+            displayPreviousEquation(equation.num1, "", equation.operator);
         }
         else {
-            // otherwise compute solution and select next operator
+            // otherwise compute solution and chain to next operator
             equation.num2 = Number(currentSolutionText);
             const solution = operate(equation.operator, equation.num1, equation.num2);
 
+            // reset solution display and operator
             if (!checkDecimal(solution)) {
                 resetDecimalSelected()
             }
@@ -152,17 +174,15 @@ function handleOperatorInput(label, button) {
             resetEquation(solution);
             clearSolutionDisplay();
             
-            // now update vars to allow for operation chaining
+            // update selected operator with new operator
             hasOperatorSelected = true;
             button.classList.add('selected');
+            
+            // start new equation
             equation.operator = label;
             equation.num1 = solution;
             displayPreviousEquation(equation.num1, "", equation.operator);
-            hasOperatorSelected = true;
-            
         }
-        
-        
     }
 }
 
@@ -197,22 +217,6 @@ function clearSolutionDisplay() {
 
 function clearPreviousEquation() {
     equationDisplayContent.textContent = '';
-}
-
-
-function handleEquals() {
-    if (!hasOperatorSelected) return;
-    
-    equation.num2 = Number(solutionDisplayContent.textContent);
-    let solution = operate(equation.operator, equation.num1, equation.num2);
-
-    if (!checkDecimal(solution)) {
-        resetDecimalSelected()
-    }
-    displaySolution(solution);
-    displayPreviousEquation(equation.num1, equation.num2, equation.operator);
-    resetSelectedOperator();
-    resetEquation(solution);
 }
 
 function handleDigitInput(char) {
@@ -266,13 +270,4 @@ function operate(operator, ...nums) {
     }
 
     return rounded;
-}
-
-
-function percentage(num) {
-    return num / 100;
-}
-
-function negate(num) {
-    return -(num);
 }
