@@ -16,7 +16,6 @@ A browser-based calculator built with HTML, CSS, and JavaScript as part of The O
 
 #### To add: 
 - Backspace button to undo the last entry
-- Keyboard support for digits, operators, Enter (=), Backspace, and Escape (clear)
 - Error message on division by zero
 
 ## 🛠️ Installation
