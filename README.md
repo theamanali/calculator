@@ -18,9 +18,6 @@ A browser-based calculator built with HTML, CSS, and JavaScript as part of The O
 - Backspace button to undo the last entry
 - Error message on division by zero
 
-#### To fix:
-- Solution display should clear when typing after solution is displayed.
-
 
 
 ## 🛠️ Installation
