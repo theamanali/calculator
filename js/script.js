@@ -57,8 +57,6 @@ document.addEventListener("keydown", (e) => {
         "Escape": "AC"
     };
 
-    console.log(e.key);
-
     if (keyMap[e.key]) {
         // Find button matching the key
         const matchingButton = [...document.querySelectorAll("button")]
@@ -73,7 +71,6 @@ document.addEventListener("keydown", (e) => {
 });
 
 function onEvent(event) {
-    console.log(event);
     const currentButton = event.target;
     const currentButtonLabel  = currentButton.textContent;
     const currentSolutionDisplayText   = solutionDisplayContent.textContent;
