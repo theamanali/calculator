@@ -117,6 +117,11 @@ function onEvent(event) {
 
     // Decimal
     if (currentButtonLabel === OPERATORS.DECIMAL) {
+        if (hasSolutionDisplayed) {
+            clearSolutionDisplay()
+            hasSolutionDisplayed = false;
+            resetDecimalSelected();
+        }
         handleDecimal(currentButtonLabel);
     }
 
@@ -235,9 +240,7 @@ function handleOperatorInput(label, button) {
             const solution = Number(solutionString);
             
             // reset solution display and operator
-            if (!checkDecimal(solutionString)) {
-                resetDecimalSelected()
-            }
+            resetDecimalSelected()
             resetSelectedOperator();
             resetEquation(solution);
             clearSolutionDisplay();
