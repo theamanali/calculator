@@ -14,8 +14,7 @@ A browser-based calculator built with HTML, CSS, and JavaScript as part of The O
 - Single‑pair evaluation with auto‑chaining (e.g., entering “12 + 7 −” yields 19, then uses 19 as the next operand)
 - Rounds long decimal results to fit the display
 
-#### To add: 
-- Backspace button to undo the last entry
+#### To add:
 - Error message on division by zero
 
 
