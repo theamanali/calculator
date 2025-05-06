@@ -234,7 +234,11 @@ function displaySolution(solutionText) {
 }
 
 function displayPreviousEquation(num1, num2, operator) {
-    equationDisplayContent.textContent = `${num1}${operator}${num2}`;
+    let number = Number(num1);
+    if (number > MAX_SOLUTION) {
+        number = number.toExponential(2);
+    }
+    equationDisplayContent.textContent = `${number}${operator}${num2}`;
 }
 
 function operate(operator, ...nums) {

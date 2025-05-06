@@ -19,9 +19,6 @@ A browser-based calculator built with HTML, CSS, and JavaScript as part of The O
 - Keyboard support for digits, operators, Enter (=), Backspace, and Escape (clear)
 - Error message on division by zero
 
-#### To fix:
-- Previous equation display will overflow given large equation.
-
 ## 🛠️ Installation
 
 To run locally (using SSH):
