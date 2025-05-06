@@ -6,6 +6,7 @@ const OPERATORS = {
     DIVIDE: "÷",
     MODULO: "%",
     NEGATE: "±",
+    BACKSPACE: "DEL",
     CLEAR: "AC",
     EQUALS: "=",
     DECIMAL: "."
@@ -54,10 +55,11 @@ document.addEventListener("keydown", (e) => {
         ".": ".",
         "Enter": "=",
         "=": "=",
+        "Backspace": "DEL",
         "Clear": "AC",
         "Escape": "AC"
     };
-
+    
     if (keyMap[e.key]) {
         // Find button matching the key
         const matchingButton = [...document.querySelectorAll("button")]
@@ -75,6 +77,7 @@ function onEvent(event) {
     const currentButton = event.target;
     const currentButtonLabel  = currentButton.textContent;
     const currentSolutionDisplayText   = solutionDisplayContent.textContent;
+    const clearAndBackspaceButton = document.querySelector('.clear');
 
     // If an operator is already selected, clear it
     if (currentButton.classList.contains('selected')) {
@@ -90,8 +93,14 @@ function onEvent(event) {
     }
 
     // For modulo, negate or equals, do nothing if display is empty
-    if ([OPERATORS.MODULO, OPERATORS.NEGATE, OPERATORS.EQUALS].includes(currentButtonLabel) && !currentSolutionDisplayText) {
+    if ([OPERATORS.MODULO, OPERATORS.NEGATE, OPERATORS.EQUALS, OPERATORS.BACKSPACE].includes(currentButtonLabel)
+        && !currentSolutionDisplayText) {
+
         return;
+    }
+    
+    if (currentButtonLabel === OPERATORS.BACKSPACE) {
+        handleBackspace();
     }
 
     // Unary operations
@@ -104,7 +113,6 @@ function onEvent(event) {
     if (currentButtonLabel === OPERATORS.EQUALS) {
         handleEquals();
         hasSolutionDisplayed = true;
-        return;
     }
 
     // Decimal
@@ -115,7 +123,6 @@ function onEvent(event) {
     // Binary operators (+, −, ×, ÷)
     if (currentButton.classList.contains('operator')) {
         handleOperatorInput(currentButtonLabel, currentButton);
-        return;
     }
 
     // Digits
@@ -126,6 +133,13 @@ function onEvent(event) {
         }
         handleDigitInput(currentButtonLabel);
     }
+    
+    if (solutionDisplayContent.textContent.length > 0) {
+        clearAndBackspaceButton.textContent = OPERATORS.BACKSPACE;
+    }
+    else {
+        clearAndBackspaceButton.textContent = OPERATORS.CLEAR;
+    }
 }
 
 function handleClear() {
@@ -134,6 +148,11 @@ function handleClear() {
     clearPreviousEquation();
     resetSelectedOperator();
     resetDecimalSelected();
+}
+
+function handleBackspace() {
+    let currentText = solutionDisplayContent.textContent;
+    solutionDisplayContent.textContent = currentText.substring(0, currentText.length - 1);
 }
 
 function handleUnary(label) {
