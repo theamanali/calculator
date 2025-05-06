@@ -32,10 +32,46 @@ const equationDisplayContent = document.querySelector('.equation');
 const buttons = document.querySelector('.buttons');
 solutionDisplayContent.textContent = "";
 
-buttons.addEventListener("click", onButtonClick);
+buttons.addEventListener("click", onEvent);
+document.addEventListener("keydown", (e) => {
+    const keyMap = {
+        "0": "0",
+        "1": "1",
+        "2": "2",
+        "3": "3",
+        "4": "4",
+        "5": "5",
+        "6": "6",
+        "7": "7",
+        "8": "8",
+        "9": "9",
+        "+": "+",
+        "-": "−",
+        "*": "×",
+        "/": "÷",
+        "%": "%",
+        ".": ".",
+        "Enter": "=",
+        "=": "=",
+        "Backspace": "AC"
+    };
 
-function onButtonClick(e) {
-    const currentButton = e.target;
+    if (keyMap[e.key]) {
+        // Find button matching the key
+        const matchingButton = [...document.querySelectorAll("button")]
+            .find(btn => btn.textContent === keyMap[e.key]);
+
+        if (matchingButton) {
+            // Fabricate a mock event
+            const fakeEvent = { target: matchingButton };
+            onEvent(fakeEvent);
+        }
+    }
+});
+
+function onEvent(event) {
+    console.log(event);
+    const currentButton = event.target;
     const currentButtonLabel  = currentButton.textContent;
     const currentSolutionDisplayText   = solutionDisplayContent.textContent;
 
