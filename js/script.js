@@ -27,6 +27,7 @@ let equation = {
 let solutionDisplayContent = document.querySelector('.solution-display');
 let hasOperatorSelected = false;
 let hasDecimalSelected = false;
+let hasSolutionDisplayed = false;
 
 const equationDisplayContent = document.querySelector('.equation');
 const buttons = document.querySelector('.buttons');
@@ -102,6 +103,7 @@ function onEvent(event) {
     // Equals
     if (currentButtonLabel === OPERATORS.EQUALS) {
         handleEquals();
+        hasSolutionDisplayed = true;
         return;
     }
 
@@ -118,6 +120,10 @@ function onEvent(event) {
 
     // Digits
     if (currentButton.classList.contains('number')) {
+        if (hasSolutionDisplayed) {
+            clearSolutionDisplay();
+            hasSolutionDisplayed = false;
+        }
         handleDigitInput(currentButtonLabel);
     }
 }
@@ -200,10 +206,11 @@ function handleOperatorInput(label, button) {
         else {
             // otherwise compute solution and chain to next operator
             equation.num2 = Number(currentSolutionText);
-            const solution = operate(equation.operator, equation.num1, equation.num2);
-
+            const solutionString = operate(equation.operator, equation.num1, equation.num2);
+            const solution = Number(solutionString);
+            
             // reset solution display and operator
-            if (!checkDecimal(solution)) {
+            if (!checkDecimal(solutionString)) {
                 resetDecimalSelected()
             }
             resetSelectedOperator();
