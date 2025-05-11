@@ -34,6 +34,11 @@ Or, after cloning, simply open `index.html` in your browser!
 - CSS (Flexbox)
 - JavaScript (DOM manipulation, event listeners)
 
+## 💳 Credits
+- The Odin Project, for the project idea
+- Google Fonts, for the "Inter" font
+- Apple, for the design inspiration
+
 ## 📄 License
 
 This project is licensed under the MIT License.
