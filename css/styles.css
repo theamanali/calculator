@@ -1,6 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 
-
+:root {
+  --gray: #505050;
+  --light-gray: #a3a3a3;
+}
 
 html, body {
   height: 100%;
@@ -11,7 +14,7 @@ html, body {
   flex-direction: column;
   font-family: -apple-system, Inter, sans-serif;
   box-sizing: border-box;
-  background-color: #505050;
+  background-color: var(--gray);
 }
 
 p {
@@ -59,7 +62,7 @@ button {
 }
 
 button:active {
-  background-color: #a3a3a3;
+  background-color: var(--light-gray);
 }
 
 .display-container {
@@ -78,7 +81,7 @@ button:active {
 
 .equation {
   font-size: 36px;
-  color: #505050;
+  color: var(--gray);
   margin: 0 0 0 auto;
   min-height: 44px;
 }
@@ -100,7 +103,7 @@ button:active {
 .modulo,
 .clear,
 .negative {
-  background-color: #505050;
+  background-color: var(--gray);
 }
 
 
@@ -133,5 +136,5 @@ button:active {
 }
 
 .selected {
-  background-color: #a3a3a3;
+  background-color: var(--light-gray);
 }
